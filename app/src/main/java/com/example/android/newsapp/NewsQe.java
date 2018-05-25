@@ -15,35 +15,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class NewsQe {
     /**
      * Tag for log messages
      */
     public static final String LOG_TAG = MainActivity.class.getName();
-    /**
-     * Date Helper
-     */
-    private static String formatDate(String dateData) {
-        String guardianJsonDateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-        SimpleDateFormat jsonDateFormatter = new SimpleDateFormat(guardianJsonDateFormat, Locale.UK);
-        try {
-            Date jsonDateToParse = jsonDateFormatter.parse(dateData);
-            String resultDate = "MMM d, yyy";
-            SimpleDateFormat resultDateFormatter = new SimpleDateFormat(resultDate, Locale.UK);
-            return resultDateFormatter.format(jsonDateToParse);
-        } catch (ParseException e) {
-            Log.e(LOG_TAG, "Error Formatting the Json Date", e);
-            return "";
-        }
-
-    }
 
 
     public static List<News> extractFeatureFromJson(String newsJSON) {
@@ -51,7 +30,7 @@ public class NewsQe {
         if (TextUtils.isEmpty(newsJSON)) {
             return null;
         }
-        // Create an empty ArrayList that we can start adding earthquakes to
+        // Create an empty ArrayList that we can start adding News to
         List<News> news = new ArrayList<>();
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -62,7 +41,7 @@ public class NewsQe {
             // Extract the JSONArray associated with the key called "response",
             // which represents a list of response (or News).
             JSONObject newsItem = baseJsonResponse.getJSONObject("response");
-            // For each "article" in the earthquakeArray, create an {@link "article"} object
+            // For each "article" in the NewsArray, create an {@link "article"} object
             JSONArray results = newsItem.getJSONArray("results");
 
             for (int i = 0; i < results.length(); i++) {
@@ -72,8 +51,8 @@ public class NewsQe {
                 // Extract the value for the key called "SectionName"
                 String SectionName = currentNews.getString("sectionName");
                 // Extract the value for the key called webPublicationDate ;
-                String time  = currentNews.getString("webPublicationDate");
-                time = formatDate(time);
+                String time = currentNews.getString("webPublicationDate");
+
 
                 // Extract the value for the key called webTitle
                 String title = currentNews.getString("webTitle");
@@ -101,27 +80,23 @@ public class NewsQe {
     /**
      * Query the USGS dataset and return a list of {@link News} objects.
      */
-    public static List<News> fetchEarthquakeData(String requestUrl) {
+    public static List<News> fetchNewsData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        // Extract relevant fields from the JSON response and create a list of {@link News}s
         List<News> news = extractFeatureFromJson(jsonResponse);
 
-        // Return the list of {@link Earthquake}s
+        // Return the list of {@link news}s
         return news;
     }
 

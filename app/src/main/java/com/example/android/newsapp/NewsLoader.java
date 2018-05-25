@@ -1,15 +1,16 @@
 package com.example.android.newsapp;
 
-import android.content.AsyncTaskLoader;
-import android.content.Context;
+        import android.content.AsyncTaskLoader;
+        import android.content.Context;
 
-import java.util.List;
+        import java.util.List;
 
 public class NewsLoader extends AsyncTaskLoader<List<News>> {
     /**
      * Query URL
      */
     private String mUrl;
+
     /**
      * Constructs a new {@link NewsLoader}.
      *
@@ -20,10 +21,12 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
         super(context);
         mUrl = url;
     }
+
     @Override
     protected void onStartLoading() {
         forceLoad();
     }
+
     /**
      * This is on a background thread.
      */
@@ -33,8 +36,8 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
         if (mUrl == null) {
             return null;
         }
-        // Perform the network request, parse the response, and extract a list of earthquakes.
-        List<News> earthquakes = NewsQe.fetchEarthquakeData(mUrl);
-        return earthquakes;
+        // Perform the network request, parse the response, and extract a list of News.
+        List<News> news = NewsQe.fetchNewsData(mUrl);
+        return news;
     }
 }
