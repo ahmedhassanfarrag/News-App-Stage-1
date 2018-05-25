@@ -50,7 +50,8 @@ public class NewsQe {
                 // Extract the value for the key called "SectionName"
                 String SectionName = currentNews.getString("sectionName");
                 // Extract the value for the key called webPublicationDate ;
-                long time = currentNews.getLong("webPublicationDate");
+                String time  = currentNews.getString("webPublicationDate");
+
                 // Extract the value for the key called webTitle
                 String title = currentNews.getString("webTitle");
                 // Extract the value for the key called pillarName
@@ -163,4 +164,6 @@ public class NewsQe {
         return output.toString();
 
     }
+
+
 }

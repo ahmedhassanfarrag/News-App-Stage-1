@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,14 +35,23 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView sectionName = (TextView)listItemView.findViewById(R.id.sectionName);
         sectionName.setText(currentNews.getmSectionName());
 
-        // Create a new Date object from the time in milliseconds of the News
-        Date dateObject = new Date(currentNews.getmTime());
+        Date dateObject = null;
+        String dStart = currentNews.getmTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+        try {
+            dateObject = format.parse(dStart);
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+
         // Find the TextView with view ID date
         TextView dateView = (TextView) listItemView.findViewById(R.id.date);
         // Format the date string (i.e. "Mar 3, 1984")
         String formattedDate = formatDate(dateObject);
         // Display the date of the current news in that TextView
         dateView.setText(formattedDate);
+
 
         // Find the TextView with view ID time
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);

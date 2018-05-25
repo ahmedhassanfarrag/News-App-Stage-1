@@ -3,12 +3,12 @@ package com.example.android.newsapp;
 public class News {
 
     private String mSectionName;
-    private long mTime;
+    private String mTime;
     private String mTitle;
     private String mPillarName;
     private String mUrl;
 
-    public News(String SectionName, long time, String title, String pillarName, String url) {
+    public News(String SectionName, String time, String title, String pillarName, String url) {
         mSectionName = SectionName;
         mTime = time;
         mTitle = title;
@@ -20,7 +20,7 @@ public class News {
         return mSectionName;
     }
 
-    public long getmTime() {
+    public String getmTime() {
         return mTime;
     }
 
