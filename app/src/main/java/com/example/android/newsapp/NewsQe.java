@@ -15,14 +15,36 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class NewsQe {
     /**
      * Tag for log messages
      */
     public static final String LOG_TAG = MainActivity.class.getName();
+    /**
+     * Date Helper
+     */
+    private static String formatDate(String dateData) {
+        String guardianJsonDateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        SimpleDateFormat jsonDateFormatter = new SimpleDateFormat(guardianJsonDateFormat, Locale.UK);
+        try {
+            Date jsonDateToParse = jsonDateFormatter.parse(dateData);
+            String resultDate = "MMM d, yyy";
+            SimpleDateFormat resultDateFormatter = new SimpleDateFormat(resultDate, Locale.UK);
+            return resultDateFormatter.format(jsonDateToParse);
+        } catch (ParseException e) {
+            Log.e(LOG_TAG, "Error Formatting the Json Date", e);
+            return "";
+        }
+
+    }
+
 
     public static List<News> extractFeatureFromJson(String newsJSON) {
         // If the JSON string is empty or null, then return early.
@@ -51,6 +73,7 @@ public class NewsQe {
                 String SectionName = currentNews.getString("sectionName");
                 // Extract the value for the key called webPublicationDate ;
                 String time  = currentNews.getString("webPublicationDate");
+                time = formatDate(time);
 
                 // Extract the value for the key called webTitle
                 String title = currentNews.getString("webTitle");
