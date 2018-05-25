@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
 
     private static final String guardianapis_REQUEST_URL =
-            "https://content.guardianapis.com/search?api-key=846eef32-4175-4848-a06e-409aa6dce970";
+            "https://content.guardianapis.com/search?show-tags=contributor&api-key=846eef32-4175-4848-a06e-409aa6dce970";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

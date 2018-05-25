@@ -63,6 +63,10 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView titleName = (TextView) listItemView.findViewById(R.id.webTitle);
         titleName.setText(currentNews.getmTitile());
 
+        //Find the TextView with the ID author
+        TextView author = listItemView.findViewById(R.id.author);
+        author.setText(currentNews.getmAuthor());
+
         // Find the TextView with view ID titleName.
         TextView PillarName = (TextView) listItemView.findViewById(R.id.pillarName);
         PillarName.setText(currentNews.getmPillarName());

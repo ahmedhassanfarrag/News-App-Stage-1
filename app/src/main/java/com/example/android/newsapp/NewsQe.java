@@ -52,17 +52,28 @@ public class NewsQe {
                 String SectionName = currentNews.getString("sectionName");
                 // Extract the value for the key called webPublicationDate ;
                 String time = currentNews.getString("webPublicationDate");
-
-
                 // Extract the value for the key called webTitle
                 String title = currentNews.getString("webTitle");
                 // Extract the value for the key called pillarName
                 String PillarName = currentNews.getString("pillarName");
                 // Extract the value for the key called "url"
                 String url = currentNews.getString("webUrl");
+                //Extract the value of the author
+                JSONArray tagsArray = currentNews.getJSONArray("tags");
+                String Author;
+                if (tagsArray.length() == 0) {
+                    Author = null;
+                } else {
+                    StringBuilder artAuthorBuilder = new StringBuilder();
+                    for (int j = 0; j < tagsArray.length(); j++) {
+                        JSONObject objectPositionOne = tagsArray.getJSONObject(j);
+                        artAuthorBuilder.append(objectPositionOne.getString("webTitle")).append(". ");
+                    }
+                    Author = artAuthorBuilder.toString();
+                }
                 // Create a new {@link news} object with the sectionName, time, title,
                 // pillarName and url from the JSON response.
-                News newss = new News(SectionName, time, title, PillarName, url);
+                News newss = new News(SectionName, time, title,Author, PillarName, url);
                 news.add(newss);
             }
 
